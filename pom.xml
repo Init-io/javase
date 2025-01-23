@@ -6,22 +6,12 @@
 
     <groupId>com.github.init-io</groupId>
     <artifactId>javase</artifactId>
-    <version>1.1.1</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id> <!-- Repository ID -->
-            <name> GitHub init-io Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/init-io/javase</url>
-        </repository>
-    </distributionManagement>
-
 
     <dependencies>
         <dependency>
