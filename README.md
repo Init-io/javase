@@ -1,6 +1,7 @@
 # Javase: Firebase? More Like Java-Ease! 🚀  
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.init-io/javase.svg?label=Maven%20Central)
-**Version 1.1.1**  
+
+**Version v1.1.1**  
 *(Because good things come in threes)*  
 
 ---
