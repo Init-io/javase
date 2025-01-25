@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"io.github.initio.javase","l":"Authenticate"},{"p":"io.github.initio.javase","l":"Database"},{"p":"io.github.initio.javase","l":"Server"},{"p":"io.github.initio.javase","l":"Storage"}];updateSearchResults();
