@@ -40,7 +40,7 @@ Think of it as your over-caffeinated, always-on-call Firebase assistant who actu
 
 #### Gradle:
 ```groovy
-implementation 'io.github.initio:javase:1.1.1'
+implementation 'io.github.init-io:javase:1.1.1'
 ```
 
 ---
