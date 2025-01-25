@@ -1,5 +1,3 @@
----
-
 # Javase: Firebase? More Like Java-Ease! 🚀  
 **Version 1.1.1**  
 *(Because good things come in threes)*  
@@ -130,5 +128,3 @@ This project is licensed under the [MIT License](LICENSE). In short: use it, mod
 Firebase is great, but let’s be honest — their APIs can be... *quirky*. Javase turns those quirks into an elegant experience. So, go ahead: download, experiment, and enjoy Firebase like never before.  
 
 Remember, **life’s too short for bad libraries.** 🧑‍💻
-
----
