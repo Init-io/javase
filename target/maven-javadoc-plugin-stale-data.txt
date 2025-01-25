@@ -1,0 +1,53 @@
+@options
+@argfile
+-classpath
+'C:/Users/SIAM/.m2/repository/org/json/json/20240303/json-20240303.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'17'
+-sourcepath
+'C:/Users/SIAM/IdeaProjects/javase/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/SIAM/IdeaProjects/javase/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Javase 1.1.1 API'
+-linkoffline
+'https://docs.oracle.com/en/java/javase/17/docs/api' 'C:/Users/SIAM/IdeaProjects/javase/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'Javase 1.1.1 API'
+'C:/Users/SIAM/IdeaProjects/javase/src/main/java/io/github/initio/javase/Authenticate.java'
+'C:/Users/SIAM/IdeaProjects/javase/src/main/java/io/github/initio/javase/Database.java'
+'C:/Users/SIAM/IdeaProjects/javase/src/main/java/io/github/initio/javase/Server.java'
+'C:/Users/SIAM/IdeaProjects/javase/src/main/java/io/github/initio/javase/Storage.java'
+C:\Users\SIAM\.m2\repository\org\json\json\20240303\json-20240303.jar = 1737729545033
+C:\Users\SIAM\IdeaProjects\javase\src\main\java = 1737722759336
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\allclasses-index.html = 1737801370078
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\allpackages-index.html = 1737801370082
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\copy.svg = 1737801370140
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\element-list = 1737801369995
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\help-doc.html = 1737801370130
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\index-all.html = 1737801370112
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\index.html = 1737801370120
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\link.svg = 1737801370143
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\member-search-index.js = 1737801370090
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\module-search-index.js = 1737801370084
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\overview-tree.html = 1737801370058
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\package-search-index.js = 1737801370086
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\script.js = 1737801370138
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\search-page.js = 1737801370148
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\search.html = 1737801370117
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\search.js = 1737801370146
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\stylesheet.css = 1737801370135
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\tag-search-index.js = 1737801370092
+C:\Users\SIAM\IdeaProjects\javase\target\apidocs\type-search-index.js = 1737801370088
