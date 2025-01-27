@@ -20,6 +20,7 @@ public class Authenticate {
     private Server server;
     private String apiKey;
     private String authToken; // Stores the idToken
+    private String refreshToken; // Stores the refreshToken
     private ExecutorService executorService;
     private String lastError;
 
@@ -32,6 +33,7 @@ public class Authenticate {
         this.server = server;
         this.apiKey = server.getApiKey();
         this.authToken = null; // Starts as null
+        this.refreshToken = null; // Starts as null
         this.executorService = Executors.newCachedThreadPool();
         this.lastError = null; // Tracks the last error
     }
@@ -47,6 +49,7 @@ public class Authenticate {
         try {
             String response = executeTask(() -> signUpWithEmailAndPassword(email, password));
             authToken = extractIdToken(response); // Extract and store idToken if successful
+            refreshToken = extractRefreshToken(response); // Extract and store refreshToken if available
             clearError();
             return response;
         } catch (Exception e) {
@@ -66,8 +69,55 @@ public class Authenticate {
         try {
             String response = executeTask(() -> signInWithEmailPassword(email, password));
             authToken = extractIdToken(response); // Extract and store idToken if successful
+            refreshToken = extractRefreshToken(response); // Extract and store refreshToken if available
             clearError();
             return response;
+        } catch (Exception e) {
+            captureError(e);
+            return null;
+        }
+    }
+
+    /**
+     * Refreshes the current idToken using the refreshToken.
+     * The refreshToken is obtained when signing in or signing up.
+     *
+     * @return The new idToken.
+     */
+    public String refreshIdToken() {
+        try {
+            if (refreshToken == null) {
+                captureError(new Exception("No refresh token available"));
+                return null;
+            }
+
+            String response = executeTask(() -> {
+                URL url = new URL("https://securetoken.googleapis.com/v1/token?key=" + apiKey);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.setDoOutput(true);
+
+                // The payload for refreshing the token
+                String payload = "grant_type=refresh_token&refresh_token=" + refreshToken;
+                OutputStream os = connection.getOutputStream();
+                os.write(payload.getBytes());
+                os.flush();
+                os.close();
+
+                return handleResponse(connection);
+            });
+
+            // Parse the response and extract the new idToken
+            JSONObject jsonResponse = new JSONObject(response);
+            if (jsonResponse.has("id_token")) {
+                this.authToken = jsonResponse.getString("id_token"); // Update the stored idToken
+                clearError();
+                return authToken; // Return the new idToken
+            } else {
+                captureError(new Exception("No id_token found in response"));
+                return null;
+            }
         } catch (Exception e) {
             captureError(e);
             return null;
@@ -291,36 +341,32 @@ public class Authenticate {
 
     private String handleResponse(HttpURLConnection connection) throws IOException {
         int responseCode = connection.getResponseCode();
-        InputStream inputStream = (responseCode == 200) ? connection.getInputStream() : connection.getErrorStream();
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder response = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            response.append(line);
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder content = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+            return content.toString();
+        } else {
+            return "Error: " + responseCode;
         }
-        reader.close();
-
-        if (responseCode != 200) {
-            lastError = "HTTP Error " + responseCode + ": " + response.toString();
-            throw new IOException(lastError);
-        }
-
-        lastError = null;
-        return response.toString();
     }
 
     private String extractIdToken(String response) {
-        try {
-            JSONObject jsonResponse = new JSONObject(response);
-            return jsonResponse.getString("idToken");
-        } catch (Exception e) {
-            return null;
-        }
+        JSONObject jsonResponse = new JSONObject(response);
+        return jsonResponse.optString("idToken");
+    }
+
+    private String extractRefreshToken(String response) {
+        JSONObject jsonResponse = new JSONObject(response);
+        return jsonResponse.optString("refreshToken");
     }
 
     private void captureError(Exception e) {
-        lastError = e.getMessage() != null ? e.getMessage() : "Unknown error occurred";
+        lastError = e.getMessage();
     }
 
     private void clearError() {
