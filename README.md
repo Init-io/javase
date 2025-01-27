@@ -1,7 +1,7 @@
 # Javase: Firebase? More Like Java-Ease! 🚀  
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.init-io/javase.svg?label=Maven%20Central)
 
-**Version v1.1.1**  
+**Version v1.2.2**  
 *(Because good things come in threes)*  
 
 ---
@@ -34,13 +34,13 @@ Think of it as your over-caffeinated, always-on-call Firebase assistant who actu
 <dependency>
     <groupId>io.github.initio</groupId>
     <artifactId>javase</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.2</version>
 </dependency>
 ```
 
 #### Gradle:
 ```groovy
-implementation 'io.github.init-io:javase:1.1.1'
+implementation 'io.github.init-io:javase:1.2.2'
 ```
 
 ---
@@ -48,9 +48,42 @@ implementation 'io.github.init-io:javase:1.1.1'
 ### 📦 How to Use  
 Here’s a quick peek at how ridiculously easy it is to make Firebase work for you with **Javase**.
 
-#### 1. **Database Module**:  
+#### 1. **Authenticaton Module**:
 ```java
-Server server = new Server("https://my-firebase-project.firebaseio.com/");
+Server server = new Server();
+server.initialize(apiKey,authDomain,databaseUrl,storageBucket);
+Authentication auth = new Authenticaton(server);
+
+//SignUp
+auth.signUp(email,password);
+
+//SignIn
+auth.signIn(email,password);
+
+//Get idTokem
+auth.getIdToken(); //expires in 1 hour
+
+//Refresh toke
+auth.refreshIdToken();
+
+//Check if user is verified
+auth.isVerified(auth.getIdToken());
+
+//Verify user
+auth.verifyUser(auth.getIdToken());
+
+//Reset user password
+auth.resetUser(email);
+
+//Remove an user
+auth.removeUser(auth.getIdToken());
+
+```
+
+#### 2. **Database Module**:  
+```java
+Server server = new Server();
+server.initialize(apiKey,authDomain,databaseUrl,storageBucket);
 Database database = new Database(server);
 
 // Fetch data
@@ -68,9 +101,10 @@ System.out.println("Update Response: " + updateResponse);
 // Delete data
 String deleteResponse = database.remove("users/123", "id-token");
 System.out.println("Delete Response: " + deleteResponse);
+
 ```
 
-#### 2. **Storage Module**:  
+#### 3. **Storage Module**:  
 ```java
 Storage storage = new Storage(server, new Authenticate("id-token"));
 
