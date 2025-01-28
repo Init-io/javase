@@ -41,7 +41,7 @@ public class Authenticate {
     /**
      * Signs up a user with the provided email and password.
      *
-     * @param email The email of the user.
+     * @param email    The email of the user.
      * @param password The password for the user.
      * @return The response from the sign-up operation.
      */
@@ -61,7 +61,7 @@ public class Authenticate {
     /**
      * Signs in a user with the provided email and password.
      *
-     * @param email The email of the user.
+     * @param email    The email of the user.
      * @param password The password for the user.
      * @return The response from the sign-in operation.
      */
@@ -341,19 +341,24 @@ public class Authenticate {
 
     private String handleResponse(HttpURLConnection connection) throws IOException {
         int responseCode = connection.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
-            StringBuilder content = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
-            }
-            in.close();
-            return content.toString();
-        } else {
-            return "Error: " + responseCode;
+        InputStream inputStream = (responseCode == 200) ? connection.getInputStream() : connection.getErrorStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            response.append(line);
         }
+        reader.close();
+        connection.disconnect();
+
+        if (responseCode != 200) {
+            lastError = "HTTP Error " + responseCode + ": " + response.toString();
+            throw new IOException(lastError);
+        }
+
+        return response.toString();
     }
+
 
     private String extractIdToken(String response) {
         JSONObject jsonResponse = new JSONObject(response);
@@ -366,7 +371,7 @@ public class Authenticate {
     }
 
     private void captureError(Exception e) {
-        lastError = e.getMessage();
+        lastError = e.getMessage() != null ? e.getMessage() : "Unknown error occurred";
     }
 
     private void clearError() {

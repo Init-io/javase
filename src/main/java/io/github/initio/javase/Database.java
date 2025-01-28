@@ -39,7 +39,7 @@ public class Database {
      */
     public String get(String path, String idToken) {
         try {
-            System.out.println("DEBUG: get() called with path = " + path);
+            //System.out.println("DEBUG: get() called with path = " + path);
             validatePath(path);
             String result = executeTask(() -> getData(path, idToken));
             if (result == null) throw new IOException("Server returned null for get request");
@@ -62,7 +62,7 @@ public class Database {
      */
     public String put(String path, String key, Object value, String idToken) {
         try {
-            System.out.println("DEBUG: put() called with path = " + path + ", key = " + key + ", value = " + value);
+            //System.out.println("DEBUG: put() called with path = " + path + ", key = " + key + ", value = " + value);
             validatePath(path);
             String data = createJsonPayload(key, value);
             String result = executeTask(() -> putData(path, data, idToken));
@@ -106,7 +106,7 @@ public class Database {
      */
     public String remove(String path, String idToken) {
         try {
-            System.out.println("DEBUG: remove() called with path = " + path);
+            //System.out.println("DEBUG: remove() called with path = " + path);
             validatePath(path);
             String result = executeTask(() -> removeData(path, idToken));
             if (result == null) throw new IOException("Server returned null for remove request");
@@ -135,14 +135,14 @@ public class Database {
      */
     private String executeTask(Callable<String> task) {
         try {
-            System.out.println("DEBUG: Task started");
+            //System.out.println("DEBUG: Task started");
             Future<String> future = executorService.submit(task);
             String result = future.get();
-            System.out.println("DEBUG: Task result = " + result);
+            //System.out.println("DEBUG: Task result = " + result);
             return result;
         } catch (Exception e) {
             lastError = "Task execution error: " + e.getMessage();
-            System.out.println("DEBUG: Task execution failed: " + lastError);
+            //System.out.println("DEBUG: Task execution failed: " + lastError);
             return null;
         }
     }
@@ -210,7 +210,7 @@ public class Database {
 
             if (responseCode != 200) {
                 lastError = "HTTP Error " + responseCode + ": " + response.toString();
-                System.out.println("DEBUG: Error Response Code = " + responseCode);
+                //System.out.println("DEBUG: Error Response Code = " + responseCode);
                 throw new IOException(lastError);
             }
 
@@ -219,7 +219,7 @@ public class Database {
                 throw new IOException(lastError);
             }
 
-            System.out.println("DEBUG: Successful Response: " + response.toString());
+            //System.out.println("DEBUG: Successful Response: " + response.toString());
             lastError = null;
             return response.toString();
         }
@@ -245,10 +245,10 @@ public class Database {
     }
 
     private void captureError(Exception e) {
-        lastError = e.getMessage() != null ? e.getMessage() : "Unknown error occurred.";
+        lastError = e.getMessage() != null ? e.getMessage() : "Unknown error occurred";
     }
 
     private void clearError() {
         lastError = null;
     }
-}
+    }
