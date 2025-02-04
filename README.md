@@ -2,7 +2,7 @@
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.init-io/javase.svg?label=Maven%20Central)
 ![GitHub Release](https://img.shields.io/github/v/release/init-io/Javase?label=release)
 [![License](https://img.shields.io/github/license/init-io/Javase)](LICENSE)
-![downloads](https://img.shields.io/Javase/downloads-13k%2Fmonth-brightgreen)
+![downloads](https://img.shields.io/badge/downloads-13k%2Fmonth-brightgreen)
 
 **Version v1.2.3**  
 *(Because good things come in threes)*  
