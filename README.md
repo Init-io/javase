@@ -1,6 +1,6 @@
 # Javase: Firebase? More Like Java-Ease! 🚀  
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.init-io/javase.svg?label=Maven%20Central)
-[![GitHub release](https://img.shields.io/github/v/release/init-io/DoEEP?include_prereleases&label=Release)](https://github.com/init-io/Javase/releases)
+[![GitHub release](https://img.shields.io/github/v/release/init-io/Javase?include_prereleases&label=Release)](https://github.com/init-io/Javase/releases)
 ![GitHub Release](https://img.shields.io/github/v/release/init-io/Javase?label=release)
 [![License](https://img.shields.io/github/license/init-io/Javase)](LICENSE)
 
