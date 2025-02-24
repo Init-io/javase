@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/github/license/init-io/Javase)](LICENSE)
 ![downloads](https://img.shields.io/badge/downloads-1k%2Fmonth-brightgreen)
 
-**Version v1.2.3**  
+**Version v1.3.4**  
 *(Because good things come in threes)*  
 
 ---
