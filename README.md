@@ -37,13 +37,13 @@ Think of it as your over-caffeinated, always-on-call Firebase assistant who actu
 <dependency>
     <groupId>io.github.initio</groupId>
     <artifactId>javase</artifactId>
-    <version>1.2.3</version>
+    <version>1.3.4</version>
 </dependency>
 ```
 
 #### Gradle:
 ```groovy
-implementation 'io.github.init-io:javase:1.2.3'
+implementation 'io.github.init-io:javase:1.3.4'
 ```
 
 ---
