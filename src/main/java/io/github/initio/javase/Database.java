@@ -173,6 +173,32 @@ public class Database {
 
 
     /**
+     * Appends a JSONObject as the next child (e.g., 0,1,2...) under the given path.
+     *
+     * @param path     The path to the parent node (e.g., "notifications").
+     * @param json     The JSONObject to append.
+     * @param idToken  The authentication token (optional, can be empty).
+     * @return The JSON string response from the database or null if an error occurs.
+     */
+    /**
+     * Pushes a JSONObject under the given path with a unique Firebase key (e.g., -NxABC...).
+     *
+     * @param path     The parent node path (e.g., "notifications").
+     * @param json     The JSONObject to push.
+     * @param idToken  The authentication token (optional, can be empty).
+     * @return The Firebase-generated key response, or null if an error occurs.
+     */
+    public String pushJson(String path, JSONObject json, String idToken) {
+        try {
+            validatePath(path);
+            return executeTask(() -> postData(path, json.toString(), idToken));
+        } catch (Exception e) {
+            captureError(e);
+            return null;
+        }
+    }
+
+    /**
      * Updates data at a specified path in the Firebase Realtime Database.
      *
      * @param path    The path where the data will be updated.
@@ -251,6 +277,41 @@ public class Database {
         connection.setRequestMethod("GET");
         return handleResponse(connection);
     }
+
+    private String postData(String path, String data, String token) throws IOException {
+        URL url = new URL(databaseUrl + "/" + path + ".json?auth=" + token);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setDoOutput(true);
+
+        try (OutputStream os = connection.getOutputStream()) {
+            os.write(data.getBytes());
+            os.flush();
+        }
+
+        return handleResponse(connection); // returns: {"name":"-NxABC..."}
+    }
+
+    public List<JSONObject> getJsonList(String path, String idToken) {
+        List<JSONObject> list = new ArrayList<>();
+        try {
+            String rawJson = get(path, idToken);
+            if (rawJson == null || rawJson.equals("null")) return list;
+
+            JSONObject jsonObject = new JSONObject(rawJson);
+            for (String key : jsonObject.keySet()) {
+                Object obj = jsonObject.get(key);
+                if (obj instanceof JSONObject) {
+                    list.add((JSONObject) obj);
+                }
+            }
+        } catch (Exception e) {
+            captureError(e);
+        }
+        return list;
+    }
+
 
     private String putData(String path, String data, String token) throws IOException {
         URL url = new URL(databaseUrl + "/" + path + ".json?auth=" + token);
